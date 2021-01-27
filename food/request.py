@@ -6,12 +6,9 @@ from models import Food
 def get_all_food():
     with sqlite3.connect("./pantry.db") as conn:
 
-        # Just use these. It's a Black Box.
         conn.row_factory = sqlite3.Row
-        # The messenger for the db
         db_cursor = conn.cursor()
 
-        # Write the SQL query to get the information you want
         db_cursor.execute("""
         SELECT
             f.id,
@@ -23,10 +20,8 @@ def get_all_food():
         FROM Food f
         """)
 
-        # Initialize an empty list to hold all animal representations
         food_list = []
 
-        # Convert rows of data into a Python list
         dataset = db_cursor.fetchall()
             
         for row in dataset:
