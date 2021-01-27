@@ -1,7 +1,36 @@
+from food import get_all_food
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
 class HandleRequests(BaseHTTPRequestHandler):
+
+    def parse_url(self, path):
+        path_params = path.split("/")
+        resource = path_params[1]
+
+        # setting up for query string params later
+        if "?" in resource:
+
+            param = resource.split("?")[1]
+            resource = resource.split("?")[0]
+            pair = param.split("=")
+            key = pair[0]
+            value = pair[1]
+
+            return (resource, key, value)
+
+        else:
+            id = None
+
+            try:
+                id = int(path_params[2])
+            except IndexError:
+                pass  
+            except ValueError:
+                pass  
+
+            return (resource, id)
+
 
     def _set_headers(self, status):
         self.send_response(status)
@@ -20,9 +49,17 @@ class HandleRequests(BaseHTTPRequestHandler):
     def do_GET(self):
         self._set_headers(200)
 
+        parsed_url = self.parse_url(self.path)
+
         response = "You got it dude"
 
-        self.wfile.write(response.encode())
+        if len(parsed_url) == 2:
+            (resource, id) = parsed_url
+            
+            if resource == "food":
+                response = get_all_food()
+
+        self.wfile.write(f"{response}".encode())
 
 
     def do_POST(self):
