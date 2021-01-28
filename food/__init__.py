@@ -1,1 +1,1 @@
-from .request import get_all_food
+from .request import get_all_food, get_food_by_category

@@ -1,4 +1,4 @@
-from food import get_all_food
+from food import get_all_food, get_food_by_category
 from categories import get_all_categories
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -62,6 +62,14 @@ class HandleRequests(BaseHTTPRequestHandler):
             
             elif resource == "categories":
                 response = get_all_categories()
+
+        elif len(parsed_url) == 3:
+            (resource, key, value) = parsed_url
+
+            if resource == "food":
+                if key == "category_id":
+                    response = get_food_by_category(value)
+
 
         self.wfile.write(f"{response}".encode())
 
