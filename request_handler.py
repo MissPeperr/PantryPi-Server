@@ -1,4 +1,7 @@
-from food import get_all_food, get_food_by_category
+from food.request import get_food_from_api
+from food import get_all_food
+from food import get_food_by_category
+from food import get_food_by_barcode
 from categories import get_all_categories
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -69,7 +72,14 @@ class HandleRequests(BaseHTTPRequestHandler):
             if resource == "food":
                 if key == "category_id":
                     response = get_food_by_category(value)
-
+                if key == "barcode":
+                    try:
+                        response = get_food_by_barcode(value)
+                    except TypeError:
+                        response = get_food_from_api(value)
+                    except Exception as ex:
+                        print(ex)
+                        pass
 
         self.wfile.write(f"{response}".encode())
 
@@ -89,9 +99,13 @@ class HandleRequests(BaseHTTPRequestHandler):
 
 
 def main():
+    # print("hi im in main")
+    # barcode = input("put yo barcode here:")
+    # print(f"now I have a barcode: {barcode}") 
     host = ''
     port = 8088
     HTTPServer((host, port), HandleRequests).serve_forever()
+
 
 if __name__ == "__main__":
     main()
