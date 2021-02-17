@@ -1,4 +1,4 @@
-from food.request import get_food_from_api
+from food.request import delete_food_by_barcode, get_food_from_api
 from food import get_all_food
 from food import get_food_by_category
 from food import get_food_by_barcode
@@ -12,7 +12,6 @@ class HandleRequests(BaseHTTPRequestHandler):
         path_params = path.split("/")
         resource = path_params[1]
 
-        # setting up for query string params later
         if "?" in resource:
 
             param = resource.split("?")[1]
@@ -72,7 +71,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             if resource == "food":
                 if key == "category_id":
                     response = get_food_by_category(value)
-                if key == "barcode":
+
+                elif key == "barcode":
                     try:
                         response = get_food_by_barcode(value)
                     except TypeError:
@@ -96,12 +96,23 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     def do_PUT(self):
         self.do_POST()
+    
+
+    def do_DELETE(self):
+        # TODO: delete food from db using barcode in param "food?barcode=0000"
+        self._set_headers(204)
+
+        parsed_url = self.parse_url(self.path)
+        
+        if len(parsed_url) == 3:
+            (resource, key, value) = parsed_url
+            if resource == "food" and key == "barcode":
+                response = delete_food_by_barcode(value)
+
+        self.wfile.write(response.encode())
 
 
 def main():
-    # print("hi im in main")
-    # barcode = input("put yo barcode here:")
-    # print(f"now I have a barcode: {barcode}") 
     host = ''
     port = 8088
     HTTPServer((host, port), HandleRequests).serve_forever()

@@ -26,4 +26,5 @@ INSERT INTO Food VALUES ("food_bk64133bt6s1gwb2ltlfibzx8fxr", "ICE CREAM, VANILL
 INSERT INTO Food VALUES ("food_bhgjeekag1cntnb3ty89ib5dgsf5", "SHARP WHITE CHEDDAR CHEESE", 2, "072830000956", 1, 1);
 INSERT INTO Food VALUES ("food_ajgf5dvbu2abvqbcb2c3iauhehne", "Sweetened With Stevia", 2, "858982001306", 1, 1);
 DELETE FROM Food WHERE barcode = "858982001306";
+DELETE FROM Food WHERE barcode = "%20858982001306";
 DELETE FROM Food;
