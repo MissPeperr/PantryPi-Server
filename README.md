@@ -1,6 +1,8 @@
 # Pantry Pi
 
-This is a project I'm working on for scanning items into my pantry to keep track of.
+PantryPi allows me to view the food products in my pantry! I was tired of getting to the grocery store and realizing I forget to check if we had x at home, so I'm building out a full-stack app for my specific pantry.
+
+[Client Repo](https://github.com/MissPeperr/PantryPi-Client)
 
 ### Hardware
 - [Raspberry Pi 4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/)
