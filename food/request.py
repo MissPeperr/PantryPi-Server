@@ -88,6 +88,18 @@ def get_food_by_barcode(barcode):
 
     return json.dumps(food.__dict__)
 
+
+def delete_food_by_barcode(barcode):
+    with sqlite3.connect("./pantry.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM Food WHERE barcode = ?
+        """, (barcode,))
+
+    return "DELETED"
+
+
 def create_food(food):
     with sqlite3.connect("./pantry.db") as conn:
         conn.row_factory = sqlite3.Row
