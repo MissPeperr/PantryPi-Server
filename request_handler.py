@@ -8,6 +8,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 class HandleRequests(BaseHTTPRequestHandler):
 
+    # URL Parser
     def parse_url(self, path):
         path_params = path.split("/")
         resource = path_params[1]
@@ -47,7 +48,6 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
         self.send_header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept')
         self.end_headers()
-
 
     def do_GET(self):
         self._set_headers(200)
@@ -99,7 +99,6 @@ class HandleRequests(BaseHTTPRequestHandler):
     
 
     def do_DELETE(self):
-        # TODO: delete food from db using barcode in param "food?barcode=0000"
         self._set_headers(204)
 
         parsed_url = self.parse_url(self.path)
